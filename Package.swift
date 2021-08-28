@@ -6,15 +6,14 @@ import PackageDescription
 let package = Package(
     name: "WeatherService",
     products: [
-        //WeatherService
         .executable(
-            name: "WeatherServerHosting",
-            targets: ["WeatherServerHosting"]
+            name: "WeatherServer",
+            targets: ["WeatherServerHostingApp"]
         ),
     ],
     dependencies: [
-        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", from: "0.0.1"),
-        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", from: "0.0.1"),
+        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", .upToNextMinor(from: "0.0.0")),
+        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.0")),
     ],
     targets: [
         .target(
@@ -125,7 +124,7 @@ let package = Package(
             path: "Sources/Internal/Server.Hosting.Endpoints"
         ),
         .target(
-            name: "WeatherServerHosting",
+            name: "WeatherServerHostingApp",
             dependencies: [
                 .product(name: "ServerNio", package: "Windmill"),
 
@@ -144,7 +143,7 @@ let package = Package(
                 "WeatherServerHelloWorldBackgroundProcess",
                 "WeatherServerHostingEndpoints"
             ],
-            path: "Sources/Internal/Server.Hosting",
+            path: "Sources/Internal/Server.Hosting.App",
             resources: [
                 .process("Settings/appsettings.json")
             ]
