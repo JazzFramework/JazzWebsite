@@ -3,10 +3,10 @@ import Server;
 
 import WeatherCommon;
 
-public class WeatherClientInitializer: Initializer {
-    public init() {}
+public final class WeatherClientInitializer: Initializer {
+    public required init() {}
 
-    public func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
             .WireUp(singleton: { _ in
                 return WeatherClientImpl() as WeatherClient;

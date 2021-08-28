@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/nathanmentley/swift-framework",
         "state": {
           "branch": null,
-          "revision": "79fef3da606d0fb267d7da8e95d1c2310ed2eeeb",
-          "version": "0.0.1"
+          "revision": "d479da2cacc111a34f1d0de27547e2cecb69e41c",
+          "version": "0.0.2"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/nathanmentley/SwiftServerExtensions",
         "state": {
           "branch": null,
-          "revision": "660bf1d6f4faa93de2865d244617b89113518347",
-          "version": "0.0.1"
+          "revision": "491f1e10128e9c63d69657af2a00f956642c97b9",
+          "version": "0.0.2"
         }
       }
     ]

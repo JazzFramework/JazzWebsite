@@ -1,10 +1,10 @@
 import Configuration;
 import Server;
 
-public class EndpointsInitializer: Initializer {
-    public init() {}
+public final class EndpointsInitializer: Initializer {
+    public required init() {}
 
-    public func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
             .WireUp(controller: { sp in
                 return CreateWeatherController(with: try sp.FetchType());

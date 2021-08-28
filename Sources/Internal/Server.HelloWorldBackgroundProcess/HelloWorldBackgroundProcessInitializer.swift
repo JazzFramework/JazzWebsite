@@ -1,15 +1,15 @@
 import Configuration;
 import Server;
 
-public class HelloWorldBackgroundProcessInitializer: Initializer {
-    public init() {}
+public final class HelloWorldBackgroundProcessInitializer: Initializer {
+    public required init() {}
 
-    public func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = configurationBuilder
-            .With(decoder: AppConfigV1JsonCodec())
+            .With(decoder: BackgroundJobConfigV1JsonCodec())
             .With(
-                file: "appsettings.json",
-                for: AppConfigV1JsonCodec.SupportedMediaType
+                file: "helloWorldBackgroundProcessSettings.json",
+                for: BackgroundJobConfigV1JsonCodec.SupportedMediaType
             );
 
         _ = try app

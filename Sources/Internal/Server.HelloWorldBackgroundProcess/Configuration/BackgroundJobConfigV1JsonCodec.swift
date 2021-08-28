@@ -1,29 +1,32 @@
 import Codec;
 
-public class AppConfigV1JsonCodec: JsonCodec<AppConfig> {
+public class BackgroundJobConfigV1JsonCodec: JsonCodec<BackgroundJobConfig> {
     public static let SupportedMediaType: MediaType =
         MediaType(
             withType: "application",
             withSubtype: "json",
             withParameters: [
-                "structure": "Weather.appsettings",
+                "structure": "Weather.backgroundJobConfig",
                 "version": "1"
             ]
         );
 
     public override func GetSupportedMediaType() -> MediaType {
-        return AppConfigV1JsonCodec.SupportedMediaType;
+        return BackgroundJobConfigV1JsonCodec.SupportedMediaType;
     }
 
-    public override func EncodeJson(data: AppConfig, for mediatype: MediaType) -> JsonObject {
+    public override func EncodeJson(data: BackgroundJobConfig, for mediatype: MediaType) -> JsonObject {
         return JsonObjectBuilder()
             .With("setting", property: JsonProperty(withData: data.Setting))
             .Build();
     }
 
-    public override func DecodeJson(data: JsonObject, for mediatype: MediaType) -> AppConfig? {
+    public override func DecodeJson(
+        data: JsonObject,
+        for mediatype: MediaType
+    ) -> BackgroundJobConfig? {
         let setting: JsonProperty = data["setting"] as! JsonProperty;
 
-        return AppConfig(setting.GetString());
+        return BackgroundJobConfig(setting.GetString());
     }
 }

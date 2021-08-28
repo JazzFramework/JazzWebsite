@@ -12,22 +12,21 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", .upToNextMinor(from: "0.0.0")),
-        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.0")),
+        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", .upToNextMinor(from: "0.0.2")),
+        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.2")),
     ],
     targets: [
         .target(
             name: "WeatherCommon",
             dependencies: [
                 .product(name: "Codec", package: "Windmill"),
+                .product(name: "Server", package: "Windmill"),
             ],
             path: "Sources/External/Common"
         ),
         .target(
             name: "WeatherClient",
             dependencies: [
-                .product(name: "Server", package: "Windmill"),
-
                 "WeatherCommon"
             ],
             path: "Sources/External/Client"
@@ -131,7 +130,6 @@ let package = Package(
                 .product(name: "ServerRequestLogging", package: "SwiftServerExtensions"),
                 .product(name: "ServerAuthentication", package: "SwiftServerExtensions"),
 
-                "WeatherClient",
                 "WeatherServer",
                 "WeatherServerDataAccessInMemory",
                 "WeatherServerActionsCreateWeather",
@@ -145,7 +143,7 @@ let package = Package(
             ],
             path: "Sources/Internal/Server.Hosting.App",
             resources: [
-                .process("Settings/appsettings.json")
+                .process("Settings")
             ]
         ),
     ]

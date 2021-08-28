@@ -3,10 +3,10 @@ import Server;
 
 import WeatherServer;
 
-public class InMemoryWeatherRepositoryInitializer: Initializer {
-    public init() {}
+public final class InMemoryWeatherRepositoryInitializer: Initializer {
+    public required init() {}
 
-    public func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
             .WireUp(singleton: { _ in
                 return InMemoryWeatherRepository() as WeatherRepository;

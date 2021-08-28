@@ -1,12 +1,10 @@
 import Configuration;
 import Server;
 
-import WeatherCommon;
+public final class WeatherCodecsInitializer: Initializer {
+    public required init() {}
 
-public class WeatherClientInitializer: Initializer {
-    public init() {}
-
-    public func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
             .WireUp(transcoder: { _ in
                 return WeatherV1JsonCodec();

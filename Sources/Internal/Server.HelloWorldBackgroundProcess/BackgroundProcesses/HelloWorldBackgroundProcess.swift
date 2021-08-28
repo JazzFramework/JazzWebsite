@@ -28,8 +28,8 @@ internal final class HelloWorldBackgroundProcess: BackgroundProcess {
             do {
                 let weathers: [Weather] = try _fetchAction.Get();
 
-                if let appConfig: AppConfig = _config.Fetch() {
-                    print(appConfig.Setting);
+                if let config: BackgroundJobConfig = _config.Fetch() {
+                    print(config.Setting);
                 }
 
                 print("Hello, The service currently knows of \(weathers.count) weather(s).");
