@@ -2,10 +2,10 @@ import Server;
 
 import WeatherServer;
 
-public class DeleteWeatherController: Controller {
+internal class DeleteWeatherController: Controller {
     private let _action: DeleteWeather;
 
-    public init(with action: DeleteWeather) {
+    internal init(with action: DeleteWeather) {
         _action = action;
     }
 

@@ -39,7 +39,7 @@
       },
       {
         "package": "Windmill",
-        "repositoryURL": "https://github.com/nathanmentley/swift-framework",
+        "repositoryURL": "git@github.com:nathanmentley/swift-framework.git",
         "state": {
           "branch": null,
           "revision": "d479da2cacc111a34f1d0de27547e2cecb69e41c",
@@ -120,7 +120,7 @@
       },
       {
         "package": "SwiftServerExtensions",
-        "repositoryURL": "https://github.com/nathanmentley/SwiftServerExtensions",
+        "repositoryURL": "git@github.com:nathanmentley/SwiftServerExtensions.git",
         "state": {
           "branch": null,
           "revision": "491f1e10128e9c63d69657af2a00f956642c97b9",

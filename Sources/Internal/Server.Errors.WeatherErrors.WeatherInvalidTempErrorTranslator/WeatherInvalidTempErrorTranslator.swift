@@ -2,7 +2,7 @@ import Server;
 
 import WeatherServer;
 
-public class WeatherInvalidTempErrorTranslator: ErrorTranslator {
+internal class WeatherInvalidTempErrorTranslator: ErrorTranslator {
     public override func CanHandle(error: Error) -> Bool {
         if case WeatherErrors.invalidTemp = error {
             return true;

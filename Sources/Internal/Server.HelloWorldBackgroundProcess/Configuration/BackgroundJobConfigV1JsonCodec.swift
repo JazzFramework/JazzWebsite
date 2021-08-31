@@ -1,6 +1,6 @@
 import Codec;
 
-public class BackgroundJobConfigV1JsonCodec: JsonCodec<BackgroundJobConfig> {
+internal class BackgroundJobConfigV1JsonCodec: JsonCodec<BackgroundJobConfig> {
     public static let SupportedMediaType: MediaType =
         MediaType(
             withType: "application",

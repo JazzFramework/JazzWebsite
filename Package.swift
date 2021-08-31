@@ -12,8 +12,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", .upToNextMinor(from: "0.0.2")),
-        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.2")),
+        .package(name: "Windmill", url: "git@github.com:nathanmentley/swift-framework.git", .upToNextMinor(from: "0.0.2")),
+        .package(name: "SwiftServerExtensions", url: "git@github.com:nathanmentley/SwiftServerExtensions.git", .upToNextMinor(from: "0.0.2")),
     ],
     targets: [
         .target(

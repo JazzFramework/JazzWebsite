@@ -3,10 +3,10 @@ import Server;
 import WeatherServer;
 import WeatherCommon;
 
-public class UpdateWeatherController: Controller {
+internal class UpdateWeatherController: Controller {
     private let _action: UpdateWeather;
 
-    public init(with action: UpdateWeather) {
+    internal init(with action: UpdateWeather) {
         _action = action;
     }
 
