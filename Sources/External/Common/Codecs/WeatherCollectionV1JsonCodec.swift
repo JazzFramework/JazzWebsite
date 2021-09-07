@@ -1,7 +1,7 @@
 import Codec;
 
 public class WeatherCollectionV1JsonCodec: JsonCodec<[Weather]> {
-    private static let SupportedMediaType: MediaType =
+    public static let SupportedMediaType: MediaType =
         MediaType(
             withType: "application",
             withSubtype: "json",
@@ -37,6 +37,23 @@ public class WeatherCollectionV1JsonCodec: JsonCodec<[Weather]> {
     }
 
     public override func DecodeJson(data: JsonObject, for mediatype: MediaType) -> [Weather]? {
-        return [];
+        var result: [Weather] = [];
+
+        let jsonArray: JsonArray = data["data"] as! JsonArray;
+
+        if jsonArray.GetCount() > 0 {
+            for index in 0...(jsonArray.GetCount() - 1) {
+                if let jsonObject = jsonArray[index] as? JsonObject {
+                    if let weather: Weather = WeatherCollectionV1JsonCodec.WeatherCodec.DecodeJson(
+                        data: jsonObject,
+                        for: WeatherCollectionV1JsonCodec.WeatherCodec.GetSupportedMediaType()
+                    ) {
+                        result.append(weather);
+                    }
+                }
+            }
+        }
+
+        return result;
     }
 }

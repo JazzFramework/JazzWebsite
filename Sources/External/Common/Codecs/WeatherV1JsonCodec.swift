@@ -1,7 +1,7 @@
 import Codec;
 
 public class WeatherV1JsonCodec: JsonCodec<Weather> {
-    private static let SupportedMediaType: MediaType =
+    public static let SupportedMediaType: MediaType =
         MediaType(
             withType: "application",
             withSubtype: "json",

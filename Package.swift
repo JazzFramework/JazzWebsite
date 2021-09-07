@@ -10,9 +10,22 @@ let package = Package(
             name: "WeatherServer",
             targets: ["WeatherServerHostingApp"]
         ),
+        .library(
+            name: "WeatherClient",
+            targets: ["WeatherHttpClient"]
+        ),
+        .executable(
+            name: "WeatherClientTest",
+            targets: ["WeatherClientTestApp"]
+        ),
     ],
     dependencies: [
-        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", .upToNextMinor(from: "0.0.2")),
+        .package(
+            name: "Windmill",
+            //url: "https://github.com/nathanmentley/swift-framework",
+            path: "../swift/flow"//,
+            //.upToNextMinor(from: "0.0.2")
+        ),
         .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.2")),
     ],
     targets: [
@@ -37,6 +50,25 @@ let package = Package(
                 "WeatherCommon"
             ],
             path: "Sources/External/Server"
+        ),
+        .target(
+            name: "WeatherHttpClient",
+            dependencies: [
+                .product(name: "Client", package: "Windmill"),
+                .product(name: "DataAccess", package: "Windmill"),
+                .product(name: "ErrorHandling", package: "Windmill"),
+                .product(name: "Server", package: "Windmill"),
+
+                "WeatherClient"
+            ],
+            path: "Sources/Internal/Client.Http"
+        ),
+        .target(
+            name: "WeatherClientTestApp",
+            dependencies: [
+                "WeatherHttpClient"
+            ],
+            path: "Sources/Internal/Client.TestApp"
         ),
         .target(
             name: "WeatherServerActionsCreateWeather",
