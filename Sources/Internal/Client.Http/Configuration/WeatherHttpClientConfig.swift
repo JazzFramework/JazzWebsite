@@ -1,4 +1,4 @@
-internal class WeatherHttpClientConfig {
+internal struct WeatherHttpClientConfig {
     internal let Hostname: String;
     internal let Port: Int;
 

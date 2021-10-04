@@ -2,7 +2,6 @@ import Client;
 import Configuration;
 import Server;
 
-import WeatherCommon;
 import WeatherClient;
 
 public final class WeatherClientInitializer: Initializer {
@@ -19,7 +18,7 @@ public final class WeatherClientInitializer: Initializer {
         _ = try app
             .WireUp(singleton: { sp in
                 return WeatherHttpClient(
-                    with: try sp.FetchType(),
+                    with: try await sp.FetchType(),
                     with: [
                         WeatherHttpClientErrorMapper(),
                         ClientErrorMapper()

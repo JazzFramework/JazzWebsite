@@ -1,10 +1,13 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.5
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "WeatherService",
+    platforms: [
+        .macOS(.v12),
+    ],
     products: [
         .executable(
             name: "WeatherServer",
@@ -20,13 +23,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(
-            name: "Windmill",
-            //url: "https://github.com/nathanmentley/swift-framework",
-            path: "../swift/flow"//,
-            //.upToNextMinor(from: "0.0.2")
-        ),
-        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.2")),
+        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", .upToNextMinor(from: "0.0.6")),
+        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.6")),
     ],
     targets: [
         .target(
@@ -63,7 +61,7 @@ let package = Package(
             ],
             path: "Sources/Internal/Client.Http"
         ),
-        .target(
+        .executableTarget(
             name: "WeatherClientTestApp",
             dependencies: [
                 "WeatherHttpClient"
@@ -154,7 +152,7 @@ let package = Package(
             ],
             path: "Sources/Internal/Server.Hosting.Endpoints"
         ),
-        .target(
+        .executableTarget(
             name: "WeatherServerHostingApp",
             dependencies: [
                 .product(name: "ServerNio", package: "Windmill"),

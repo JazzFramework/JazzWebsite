@@ -7,29 +7,36 @@ internal final class CreateWeatherActionBuilder {
     private static let WEATHER_CONTEXT_RESOLVER: ContextResolver<FlowContext, WeatherContext> =
         ContextResolver<FlowContext, WeatherContext>();
 
-    private let _repository: WeatherRepository;
+    private var _repository: WeatherRepository?;
 
-    internal init(with repository: WeatherRepository) {
+    internal func With(repository: WeatherRepository) -> CreateWeatherActionBuilder
+    {
         _repository = repository;
+
+        return self;
     }
 
-    internal func Build() -> CreateWeather {
-        return CreateWeatherAction(
-            withFlow: BuildFlow(),
-            withResultResolver: CreateWeatherActionBuilder.WEATHER_CONTEXT_RESOLVER
-        );
+    internal func Build() throws -> CreateWeather {
+        if let repository = _repository {
+            return CreateWeatherAction(
+                withFlow: CreateWeatherActionBuilder.BuildFlow(repository),
+                withResultResolver: CreateWeatherActionBuilder.WEATHER_CONTEXT_RESOLVER
+            );
+        }
+
+        throw ContextErrors.notResolveable(reason: "could not wire flow.");
     }
 
-    private func BuildFlow() -> Flow {
+    private static func BuildFlow(_ repository: WeatherRepository) -> Flow {
         return FlowBuilder()
-            .With(stage: BuildValidateWeatherStage(), withName: ValidateWeatherStage.NAME)
-            .With(stage: BuildSetWeatherIdStage(), withName: SetWeatherIdStage.NAME)
-            .With(stage: BuildPersistWeatherStage(), withName: PersistWeatherStage.NAME)
+            .With(stage: CreateWeatherActionBuilder.BuildValidateWeatherStage(), withName: ValidateWeatherStage.NAME)
+            .With(stage: CreateWeatherActionBuilder.BuildSetWeatherIdStage(), withName: SetWeatherIdStage.NAME)
+            .With(stage: CreateWeatherActionBuilder.BuildPersistWeatherStage(repository), withName: PersistWeatherStage.NAME)
             .With(initialStage: ValidateWeatherStage.NAME)
             .Build();
     }
 
-    private func BuildValidateWeatherStage() -> ValidateWeatherStage {
+    private static func BuildValidateWeatherStage() -> ValidateWeatherStage {
         return ValidateWeatherStage(
             withContextResolver: CreateWeatherActionBuilder.WEATHER_CONTEXT_RESOLVER,
             withTransactions: [
@@ -38,7 +45,7 @@ internal final class CreateWeatherActionBuilder {
         );
     }
 
-    private func BuildSetWeatherIdStage() -> SetWeatherIdStage {
+    private static func BuildSetWeatherIdStage() -> SetWeatherIdStage {
         return SetWeatherIdStage(
             withContextResolver: CreateWeatherActionBuilder.WEATHER_CONTEXT_RESOLVER,
             withTransactions: [
@@ -47,10 +54,10 @@ internal final class CreateWeatherActionBuilder {
         );
     }
 
-    private func BuildPersistWeatherStage() -> PersistWeatherStage {
+    private static func BuildPersistWeatherStage(_ repository: WeatherRepository) -> PersistWeatherStage {
         return PersistWeatherStage(
             withContextResolver: CreateWeatherActionBuilder.WEATHER_CONTEXT_RESOLVER,
-            withRepository: _repository,
+            withRepository: repository,
             withTransactions: [:]
         );
     }

@@ -10,7 +10,7 @@ public final class DeleteWeatherActionInitializer: Initializer {
         _ = try app
             .WireUp(singleton: { sp in
                 return DeleteWeatherAction(
-                    with: try sp.FetchType()
+                    with: try await sp.FetchType()
                 ) as DeleteWeather;
             });
     }

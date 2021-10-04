@@ -16,12 +16,12 @@ internal final class CreateWeatherAction: CreateWeather {
         _resultResolver = resultResolver;
     }
 
-    public func Create(weather: Weather) throws -> Weather {
+    public func Create(weather: Weather) async throws -> Weather {
         let context = FlowContext();
 
         context.Adopt(subcontext: WeatherContext(weather));
 
-        _ = try _flow.Execute(for: context);
+        _ = try await _flow.Execute(for: context);
 
         if let weatherContext: WeatherContext = _resultResolver.Resolve(for: context) {
             return weatherContext.Value;

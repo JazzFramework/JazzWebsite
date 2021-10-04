@@ -10,7 +10,7 @@ internal class GetWeathersAction: GetWeathers {
         _repo = repo;
     }
 
-    public func Get() throws -> [Weather] {
-        return try _repo.Get();
+    public func Get() async throws -> [Weather] {
+        return try await _repo.Get(for: []);
     }
 }

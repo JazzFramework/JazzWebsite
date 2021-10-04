@@ -7,7 +7,7 @@ internal class DeleteWeatherAction: DeleteWeather {
         _repo = repo;
     }
 
-    public func Delete(weatherId: String) throws {
-        try _repo.Delete(id: weatherId);
+    public func Delete(weatherId: String) async throws {
+        try await _repo.Delete(id: weatherId);
     }
 }

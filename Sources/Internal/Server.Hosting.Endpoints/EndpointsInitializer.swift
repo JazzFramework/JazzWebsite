@@ -1,29 +1,29 @@
 import Configuration;
 import Server;
 
-public final class EndpointsInitializer: Initializer {
+public final class EndpointsInitializer: ServerInitializer {
     public required init() {}
 
-    public override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public override func Initialize(for app: ServerApp, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
             .WireUp(controller: { sp in
-                return CreateWeatherController(with: try sp.FetchType());
+                return CreateWeatherController(with: try await sp.FetchType());
             })
 
             .WireUp(controller: { sp in
-                return DeleteWeatherController(with: try sp.FetchType());
+                return DeleteWeatherController(with: try await sp.FetchType());
             })
 
             .WireUp(controller: { sp in
-                return GetWeatherCollectionController(with: try sp.FetchType());
+                return GetWeatherCollectionController(with: try await sp.FetchType());
             })
 
             .WireUp(controller: { sp in
-                return GetWeatherController(with: try sp.FetchType());
+                return GetWeatherController(with: try await sp.FetchType());
             })
 
             .WireUp(controller: { sp in
-                return UpdateWeatherController(with: try sp.FetchType());
+                return UpdateWeatherController(with: try await sp.FetchType());
             });
     }
 }

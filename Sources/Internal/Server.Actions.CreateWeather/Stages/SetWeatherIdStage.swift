@@ -23,7 +23,7 @@ internal final class SetWeatherIdStage: BaseStage {
         super.init(withTransactions: transactions);
     }
 
-    public override func Execute(for context: FlowContext) throws -> StageResult {
+    public override func Execute(for context: FlowContext) async throws -> StageResult {
         guard let weatherContext: WeatherContext = _contextResolver.Resolve(for: context) else {
             return SetWeatherIdStage.MISSING_CONTEXT_RESULT;
         }

@@ -15,7 +15,7 @@ internal class BackgroundJobConfigV1JsonCodec: JsonCodec<BackgroundJobConfig> {
         return BackgroundJobConfigV1JsonCodec.SupportedMediaType;
     }
 
-    public override func EncodeJson(data: BackgroundJobConfig, for mediatype: MediaType) -> JsonObject {
+    public override func EncodeJson(data: BackgroundJobConfig, for mediatype: MediaType) async -> JsonObject {
         return JsonObjectBuilder()
             .With("setting", property: JsonProperty(withData: data.Setting))
             .Build();
@@ -24,7 +24,7 @@ internal class BackgroundJobConfigV1JsonCodec: JsonCodec<BackgroundJobConfig> {
     public override func DecodeJson(
         data: JsonObject,
         for mediatype: MediaType
-    ) -> BackgroundJobConfig? {
+    ) async -> BackgroundJobConfig? {
         let setting: JsonProperty = data["setting"] as! JsonProperty;
 
         return BackgroundJobConfig(setting.GetString());

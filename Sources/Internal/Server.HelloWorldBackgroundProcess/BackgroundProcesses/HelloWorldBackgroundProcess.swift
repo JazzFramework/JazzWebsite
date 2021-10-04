@@ -21,14 +21,14 @@ internal final class HelloWorldBackgroundProcess: BackgroundProcess {
         _deleteAction = deleteAction;
     }
 
-    public override func Logic() {
+    public override func Logic() async {
         while true {
             sleep(1);
 
             do {
-                let weathers: [Weather] = try _fetchAction.Get();
+                let weathers: [Weather] = try await _fetchAction.Get();
 
-                if let config: BackgroundJobConfig = _config.Fetch() {
+                if let config: BackgroundJobConfig = await _config.Fetch() {
                     print(config.Setting);
                 }
 
@@ -38,7 +38,7 @@ internal final class HelloWorldBackgroundProcess: BackgroundProcess {
                     print("The service knows too much about the weather, and will delete all of it's knowledge.");
 
                     for weather in weathers {
-                        try _deleteAction.Delete(weatherId: weather.Id);
+                        try await _deleteAction.Delete(weatherId: weather.Id);
                     }
                 }
             }

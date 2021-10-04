@@ -1,6 +1,6 @@
 import ErrorHandling;
 
-import WeatherCommon;
+import WeatherClient;
 
 internal class WeatherHttpClientErrorMapper: ErrorMapper {
     public override func CanMap(error: Error) -> Bool {
@@ -8,6 +8,6 @@ internal class WeatherHttpClientErrorMapper: ErrorMapper {
     }
 
     public override func Map(error: Error) -> Error {
-        return error;
+        return WeatherClientErrors.badRequest(reason: "bad request");
     }
 }

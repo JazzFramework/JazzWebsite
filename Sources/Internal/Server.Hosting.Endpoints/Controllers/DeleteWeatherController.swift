@@ -2,10 +2,10 @@ import Server;
 
 import WeatherServer;
 
-public class DeleteWeatherController: Controller {
+internal class DeleteWeatherController: Controller {
     private let _action: DeleteWeather;
 
-    public init(with action: DeleteWeather) {
+    internal init(with action: DeleteWeather) {
         _action = action;
     }
 
@@ -17,10 +17,10 @@ public class DeleteWeatherController: Controller {
         return "/weather/:id";
     }
 
-    public override func Logic(withRequest request: RequestContext) throws -> ResultContext {
+    public override func Logic(withRequest request: RequestContext) async throws -> ResultContext {
         let weatherId: String = request.GetRouteParameter(key: "id");
 
-        try _action.Delete(weatherId: weatherId);
+        try await _action.Delete(weatherId: weatherId);
 
         return NoContent();
     }

@@ -27,12 +27,12 @@ internal final class PersistWeatherStage: BaseStage {
         super.init(withTransactions: transactions);
     }
 
-    public override func Execute(for context: FlowContext) throws -> StageResult {
+    public override func Execute(for context: FlowContext) async throws -> StageResult {
         guard let weatherContext: WeatherContext = _contextResolver.Resolve(for: context) else {
             return PersistWeatherStage.MISSING_CONTEXT_RESULT;
         }
 
-        let result: Weather = try! _repository.Create(weatherContext.Value);
+        let result: Weather = try await _repository.Create(weatherContext.Value);
 
         context.Adopt(subcontext: WeatherContext(result));
 

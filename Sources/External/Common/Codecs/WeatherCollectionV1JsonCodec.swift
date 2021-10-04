@@ -18,12 +18,12 @@ public class WeatherCollectionV1JsonCodec: JsonCodec<[Weather]> {
         return WeatherCollectionV1JsonCodec.SupportedMediaType;
     }
 
-    public override func EncodeJson(data: [Weather], for mediatype: MediaType) -> JsonObject {
+    public override func EncodeJson(data: [Weather], for mediatype: MediaType) async -> JsonObject {
         let arrayBuilder: JsonArrayBuilder = JsonArrayBuilder();
 
         for weather in data {
             _ = arrayBuilder.With(
-                WeatherCollectionV1JsonCodec.WeatherCodec.EncodeJson(
+                await WeatherCollectionV1JsonCodec.WeatherCodec.EncodeJson(
                     data: weather,
                     for: WeatherCollectionV1JsonCodec.WeatherCodec.GetSupportedMediaType()
                 )
@@ -36,7 +36,7 @@ public class WeatherCollectionV1JsonCodec: JsonCodec<[Weather]> {
             .Build();
     }
 
-    public override func DecodeJson(data: JsonObject, for mediatype: MediaType) -> [Weather]? {
+    public override func DecodeJson(data: JsonObject, for mediatype: MediaType) async -> [Weather]? {
         var result: [Weather] = [];
 
         let jsonArray: JsonArray = data["data"] as! JsonArray;
@@ -44,7 +44,7 @@ public class WeatherCollectionV1JsonCodec: JsonCodec<[Weather]> {
         if jsonArray.GetCount() > 0 {
             for index in 0...(jsonArray.GetCount() - 1) {
                 if let jsonObject = jsonArray[index] as? JsonObject {
-                    if let weather: Weather = WeatherCollectionV1JsonCodec.WeatherCodec.DecodeJson(
+                    if let weather: Weather = await WeatherCollectionV1JsonCodec.WeatherCodec.DecodeJson(
                         data: jsonObject,
                         for: WeatherCollectionV1JsonCodec.WeatherCodec.GetSupportedMediaType()
                     ) {

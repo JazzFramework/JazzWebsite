@@ -15,14 +15,14 @@ public class WeatherV1JsonCodec: JsonCodec<Weather> {
         return WeatherV1JsonCodec.SupportedMediaType;
     }
 
-    public override func EncodeJson(data: Weather, for mediatype: MediaType) -> JsonObject {
+    public override func EncodeJson(data: Weather, for mediatype: MediaType) async -> JsonObject {
         return JsonObjectBuilder()
             .With("id", property: JsonProperty(withData: data.Id))
             .With("temp", property: JsonProperty(withData: data.Temp))
             .Build();
     }
 
-    public override func DecodeJson(data: JsonObject, for mediatype: MediaType) -> Weather? {
+    public override func DecodeJson(data: JsonObject, for mediatype: MediaType) async -> Weather? {
         let id: JsonProperty = data["id"] as! JsonProperty;
         let temp: JsonProperty = data["temp"] as! JsonProperty;
 

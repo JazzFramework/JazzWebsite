@@ -8,7 +8,7 @@ internal class WeatherHttpClientConfigV1JsonCodec: JsonCodec<WeatherHttpClientCo
             withType: "application",
             withSubtype: "json",
             withParameters: [
-                "structure": "Weather.Client.HttpConfig",
+                "structure": "weather.client.httpconfig",
                 "version": "1"
             ]
         );
@@ -17,7 +17,7 @@ internal class WeatherHttpClientConfigV1JsonCodec: JsonCodec<WeatherHttpClientCo
         return WeatherHttpClientConfigV1JsonCodec.SupportedMediaType;
     }
 
-    public override func EncodeJson(data: WeatherHttpClientConfig, for mediatype: MediaType) -> JsonObject {
+    public override func EncodeJson(data: WeatherHttpClientConfig, for mediatype: MediaType) async -> JsonObject {
         return JsonObjectBuilder()
             .With("hostname", property: JsonProperty(withData: data.Hostname))
             .With("port", property: JsonProperty(withData: data.Port))
@@ -27,7 +27,7 @@ internal class WeatherHttpClientConfigV1JsonCodec: JsonCodec<WeatherHttpClientCo
     public override func DecodeJson(
         data: JsonObject,
         for mediatype: MediaType
-    ) -> WeatherHttpClientConfig? {
+    ) async -> WeatherHttpClientConfig? {
         let hostname: JsonProperty = data["hostname"] as! JsonProperty;
         let port: JsonProperty = data["port"] as! JsonProperty;
 

@@ -3,10 +3,10 @@ import Server;
 import WeatherCommon;
 import WeatherServer;
 
-public class GetWeatherCollectionController: Controller {
+internal class GetWeatherCollectionController: Controller {
     private let _action: GetWeathers;
 
-    public init(with action: GetWeathers) {
+    internal init(with action: GetWeathers) {
         _action = action;
     }
 
@@ -18,8 +18,8 @@ public class GetWeatherCollectionController: Controller {
         return "/weather";
     }
 
-    public override func Logic(withRequest request: RequestContext) throws -> ResultContext {
-        let weathers: [Weather] = try _action.Get();
+    public override func Logic(withRequest request: RequestContext) async throws -> ResultContext {
+        let weathers: [Weather] = try await _action.Get();
 
         return Ok(body: weathers);
     }

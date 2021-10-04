@@ -20,13 +20,13 @@ internal class WeatherHttpClient: WeatherClient {
         with config: Configuration,
         with errorMappers: [ErrorMapper]
     ) {
-        if let clientConfig: WeatherHttpClientConfig = config.Fetch() {
+        /*if let clientConfig: WeatherHttpClientConfig = config.Fetch() {
             _host = clientConfig.Hostname;
             _port = clientConfig.Port;
-        } else {
+        } else {*/
             _host = WeatherHttpClient.DefaultHostname;
             _port = WeatherHttpClient.DefaultPort;
-        }
+        //}
 
         _errorMappers = errorMappers;
     }

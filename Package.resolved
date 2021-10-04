@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/hummingbird-project/hummingbird.git",
         "state": {
           "branch": null,
-          "revision": "839bae0551a97dabf41dca1b64194a57359176ca",
-          "version": "0.12.1"
+          "revision": "20b2a0ceba5e1dc5645534f7d233311aac329f48",
+          "version": "0.13.2"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/hummingbird-project/hummingbird-core.git",
         "state": {
           "branch": null,
-          "revision": "d7145aa7be8f001d6da2d5592043f2859edaaf33",
-          "version": "0.11.1"
+          "revision": "2e9a9de68aae98e8f1960803d2d02b2a700b40ee",
+          "version": "0.12.3"
         }
       },
       {
@@ -42,8 +42,8 @@
         "repositoryURL": "https://github.com/nathanmentley/swift-framework",
         "state": {
           "branch": null,
-          "revision": "d479da2cacc111a34f1d0de27547e2cecb69e41c",
-          "version": "0.0.2"
+          "revision": "52aafb8d77f38d7245d4a0f419f881c5932834a3",
+          "version": "0.0.6"
         }
       },
       {
@@ -69,8 +69,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio.git",
         "state": {
           "branch": null,
-          "revision": "94f41c4121a82fae5c7b1cb03e630e9f9e5e20f1",
-          "version": "2.32.1"
+          "revision": "6aa9347d9bc5bbfe6a84983aec955c17ffea96ef",
+          "version": "2.33.0"
         }
       },
       {
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-extras.git",
         "state": {
           "branch": null,
-          "revision": "f72c4688f89c28502105509186eadc49a49cb922",
-          "version": "1.10.0"
+          "revision": "f73ca5ee9c6806800243f1ac415fcf82de9a4c91",
+          "version": "1.10.2"
         }
       },
       {
@@ -87,8 +87,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-http2.git",
         "state": {
           "branch": null,
-          "revision": "42bdcae4ac4913507a5ee7af963c559deb60d1fc",
-          "version": "1.18.2"
+          "revision": "326f7f9a8c8c8402e3691adac04911cac9f9d87f",
+          "version": "1.18.4"
         }
       },
       {
@@ -96,8 +96,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-ssl.git",
         "state": {
           "branch": null,
-          "revision": "4829979d9f5ed9a2f4c6efd9c1ed51d1ab4d0394",
-          "version": "2.14.1"
+          "revision": "5e68c1ded15619bb281b273fa8c2d8fd7f7b2b7d",
+          "version": "2.16.1"
         }
       },
       {
@@ -105,8 +105,8 @@
         "repositoryURL": "https://github.com/apple/swift-nio-transport-services.git",
         "state": {
           "branch": null,
-          "revision": "9571a61d236c5253b6a255a2d13fac536a1e2625",
-          "version": "1.11.2"
+          "revision": "e7f5278a26442dc46783ba7e063643d524e414a0",
+          "version": "1.11.3"
         }
       },
       {
@@ -114,8 +114,8 @@
         "repositoryURL": "https://github.com/swift-server/swift-service-lifecycle.git",
         "state": {
           "branch": null,
-          "revision": "4714c3cdfa4c41ef821cf01634eadf4c54177948",
-          "version": "1.0.0-alpha.7"
+          "revision": "cea89ce04313a202ed580b411263a19b77caa874",
+          "version": "1.0.0-alpha.9"
         }
       },
       {
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/nathanmentley/SwiftServerExtensions",
         "state": {
           "branch": null,
-          "revision": "491f1e10128e9c63d69657af2a00f956642c97b9",
-          "version": "0.0.2"
+          "revision": "525ac9ae38316674e34cfa2dfc9eff3e70dc6181",
+          "version": "0.0.6"
         }
       }
     ]

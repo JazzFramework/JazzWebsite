@@ -23,7 +23,7 @@ internal final class ValidateWeatherStage: BaseStage {
         super.init(withTransactions: transactions);
     }
 
-    public override func Execute(for context: FlowContext) throws -> StageResult {
+    public override func Execute(for context: FlowContext) async throws -> StageResult {
         guard let weatherContext: WeatherContext = _contextResolver.Resolve(for: context) else {
             return ValidateWeatherStage.MISSING_CONTEXT_RESULT;
         }

@@ -1,10 +1,10 @@
 import Configuration;
 import Server;
 
-public final class HelloWorldBackgroundProcessInitializer: Initializer {
+public final class HelloWorldBackgroundProcessInitializer: ServerInitializer {
     public required init() {}
 
-    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func Initialize(for app: ServerApp, with configurationBuilder: ConfigurationBuilder) throws {
         _ = configurationBuilder
             .With(decoder: BackgroundJobConfigV1JsonCodec())
             .With(
@@ -15,9 +15,9 @@ public final class HelloWorldBackgroundProcessInitializer: Initializer {
         _ = try app
             .WireUp(backgroundProcess: { sp in
                 return HelloWorldBackgroundProcess(
-                    with: try sp.FetchType(),
-                    with: try sp.FetchType(),
-                    with: try sp.FetchType()
+                    with: try await sp.FetchType(),
+                    with: try await sp.FetchType(),
+                    with: try await sp.FetchType()
                 );
             });
     }

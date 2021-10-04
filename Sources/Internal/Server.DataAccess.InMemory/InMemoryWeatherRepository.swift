@@ -17,7 +17,7 @@ internal final class InMemoryWeatherRepository: WeatherRepository {
         super.init();
     }
 
-    public final override func Create(_ model: Weather) throws -> Weather {
+    public final override func Create(_ model: Weather) async throws -> Weather {
         _lock.lock();
 
         defer {
@@ -29,7 +29,7 @@ internal final class InMemoryWeatherRepository: WeatherRepository {
         return model;
     }
 
-    public final override func Delete(id: String) throws {
+    public final override func Delete(id: String) async throws {
         _lock.lock();
 
         defer {
@@ -39,7 +39,7 @@ internal final class InMemoryWeatherRepository: WeatherRepository {
         _data.removeValue(forKey: id);
     }
 
-    public final override func Update(_ model: Weather) throws -> Weather {
+    public final override func Update(_ model: Weather) async throws -> Weather {
         _lock.lock();
 
         defer {
@@ -51,7 +51,7 @@ internal final class InMemoryWeatherRepository: WeatherRepository {
         return model;
     }
 
-    public final override func Get(id: String) throws -> Weather {
+    public final override func Get(id: String) async throws -> Weather {
         let result: Weather? = _data[id];
 
         if let result = result {
@@ -61,7 +61,7 @@ internal final class InMemoryWeatherRepository: WeatherRepository {
         throw DataAccessErrors.notFound(reason: "Could not find resource for \(id).");
     }
 
-    public final override func Get() throws -> [Weather] {
+    public final override func Get(for query: [QueryCriteria]) async throws -> [Weather] {
         return Array(_data.values);
     }
 }
