@@ -1,5 +1,5 @@
-import Context
-import Flow
+import WindmillContext
+import WindmillFlow
 
 import WeatherCommon;
 import WeatherServer;
@@ -16,15 +16,15 @@ internal final class CreateWeatherAction: CreateWeather {
         _resultResolver = resultResolver;
     }
 
-    public func Create(weather: Weather) async throws -> Weather {
+    public func create(weather: Weather) async throws -> Weather {
         let context = FlowContext();
 
-        context.Adopt(subcontext: WeatherContext(weather));
+        context.adopt(subcontext: WeatherContext(weather));
 
-        _ = try await _flow.Execute(for: context);
+        _ = try await _flow.execute(for: context);
 
-        if let weatherContext: WeatherContext = _resultResolver.Resolve(for: context) {
-            return weatherContext.Value;
+        if let weatherContext: WeatherContext = _resultResolver.resolve(for: context) {
+            return weatherContext.value;
         }
 
         throw ContextErrors.notResolveable(reason: "Could not resolve weather context.");

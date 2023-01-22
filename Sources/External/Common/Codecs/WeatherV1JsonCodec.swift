@@ -1,7 +1,7 @@
-import Codec;
+import WindmillCodec;
 
 public class WeatherV1JsonCodec: JsonCodec<Weather> {
-    public static let SupportedMediaType: MediaType =
+    public static let weatherMediaType: MediaType =
         MediaType(
             withType: "application",
             withSubtype: "json",
@@ -11,21 +11,37 @@ public class WeatherV1JsonCodec: JsonCodec<Weather> {
             ]
         );
 
-    public override func GetSupportedMediaType() -> MediaType {
-        return WeatherV1JsonCodec.SupportedMediaType;
+    public static let weathersMediaType: MediaType =
+        MediaType(
+            withType: "application",
+            withSubtype: "json",
+            withParameters: [
+                "structure": "weather.weathers",
+                "version": "1"
+            ]
+        );
+
+    public static let collectionCodec: JsonCodec<[Weather]> =
+        CollectionJsonCodec<Weather>(
+            withCodec: WeatherV1JsonCodec(),
+            withMediaType: WeatherV1JsonCodec.weathersMediaType
+        );
+
+    public override func getSupportedMediaType() -> MediaType {
+        return WeatherV1JsonCodec.weatherMediaType;
     }
 
-    public override func EncodeJson(data: Weather, for mediatype: MediaType) async -> JsonObject {
+    public override func encodeJson(data: Weather, for mediatype: MediaType) async -> JsonObject {
         return JsonObjectBuilder()
-            .With("id", property: JsonProperty(withData: data.Id))
-            .With("temp", property: JsonProperty(withData: data.Temp))
-            .Build();
+            .with("id", property: JsonProperty(withData: data.id))
+            .with("temp", property: JsonProperty(withData: data.temp))
+            .build();
     }
 
-    public override func DecodeJson(data: JsonObject, for mediatype: MediaType) async -> Weather? {
+    public override func decodeJson(data: JsonObject, for mediatype: MediaType) async -> Weather? {
         let id: JsonProperty = data["id"] as! JsonProperty;
         let temp: JsonProperty = data["temp"] as! JsonProperty;
 
-        return Weather(id.GetString(), temp.GetString());
+        return Weather(id.getString(), temp.getString());
     }
 }

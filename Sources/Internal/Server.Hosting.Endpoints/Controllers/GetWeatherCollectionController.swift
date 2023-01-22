@@ -1,26 +1,20 @@
-import Server;
+import WindmillServer;
 
 import WeatherCommon;
 import WeatherServer;
 
-internal class GetWeatherCollectionController: Controller {
+internal final class GetWeatherCollectionController: ApiController {
     private let _action: GetWeathers;
 
-    internal init(with action: GetWeathers) {
+    internal init(action: GetWeathers) {
         _action = action;
     }
 
-    public override func GetMethod() -> HttpMethod {
-        return .get;
-    }
+    public override func getMethod() -> HttpMethod { return .get; }
+    public override func getRoute() -> String { return "/v1/weather"; }
+    public override func logic(withRequest request: RequestContext) async throws -> ResultContext {
+        let weathers: [Weather] = try await _action.get();
 
-    public override func GetRoute() -> String {
-        return "/weather";
-    }
-
-    public override func Logic(withRequest request: RequestContext) async throws -> ResultContext {
-        let weathers: [Weather] = try await _action.Get();
-
-        return Ok(body: weathers);
+        return ok(body: weathers);
     }
 }

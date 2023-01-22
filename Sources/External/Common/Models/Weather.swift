@@ -1,19 +1,19 @@
-import DataAccess;
+import WindmillDataAccess;
 
 public class Weather: Storable {
-    public var Id: String;
-    public let Temp: String;
+    public var id: String;
+    public let temp: String;
 
     public init(_ id: String, _ temp: String) {
-        Id = id;
-        Temp = temp;
+        self.id = id;
+        self.temp = temp;
     }
 
-    public func GetId() -> String {
-        return Id;
+    public func getId() -> String {
+        return id;
     }
 
-    public func Set(id: String) {
-        Id = id;
+    public func set(id: String) {
+        self.id = id;
     }
 }

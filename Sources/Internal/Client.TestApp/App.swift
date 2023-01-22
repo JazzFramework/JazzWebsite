@@ -1,18 +1,21 @@
 import Foundation;
 
 import WindmillConfiguration;
+import WindmillConsole;
 import WindmillCore;
-import WindmillServer;
-import WindmillServerHummingbird;
+
+import WeatherServer;
 
 @main
 struct App {
     static func main() async throws {
-        try await ServerAppRunner(
+        try await ConsoleAppRunner(
             withApp:
-                try ServerAppBuilder()
-                    .with(httpProcessor: HummingbirdHttpProcessor())
-                    .build(),
+                try ConsoleAppBuilder()
+                    .build()
+                    .wireUp(logic: { sp in
+                        return Entrypoint(createWeather: try await sp.fetchType());
+                    }),
             withInitializers:
                 InitializerBuilder()
                     .with(bundle: Bundle.module)

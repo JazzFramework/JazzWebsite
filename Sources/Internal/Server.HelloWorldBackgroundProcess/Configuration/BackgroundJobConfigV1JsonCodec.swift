@@ -1,7 +1,7 @@
-import Codec;
+import WindmillCodec;
 
 internal class BackgroundJobConfigV1JsonCodec: JsonCodec<BackgroundJobConfig> {
-    internal static let SupportedMediaType: MediaType =
+    internal static let supportedMediaType: MediaType =
         MediaType(
             withType: "application",
             withSubtype: "json",
@@ -11,22 +11,22 @@ internal class BackgroundJobConfigV1JsonCodec: JsonCodec<BackgroundJobConfig> {
             ]
         );
 
-    public override func GetSupportedMediaType() -> MediaType {
-        return BackgroundJobConfigV1JsonCodec.SupportedMediaType;
+    public override func getSupportedMediaType() -> MediaType {
+        return BackgroundJobConfigV1JsonCodec.supportedMediaType;
     }
 
-    public override func EncodeJson(data: BackgroundJobConfig, for mediatype: MediaType) async -> JsonObject {
+    public override func encodeJson(data: BackgroundJobConfig, for mediatype: MediaType) async -> JsonObject {
         return JsonObjectBuilder()
-            .With("setting", property: JsonProperty(withData: data.Setting))
-            .Build();
+            .with("setting", property: JsonProperty(withData: data.setting))
+            .build();
     }
 
-    public override func DecodeJson(
+    public override func decodeJson(
         data: JsonObject,
         for mediatype: MediaType
     ) async -> BackgroundJobConfig? {
         let setting: JsonProperty = data["setting"] as! JsonProperty;
 
-        return BackgroundJobConfig(setting.GetString());
+        return BackgroundJobConfig(setting.getString());
     }
 }

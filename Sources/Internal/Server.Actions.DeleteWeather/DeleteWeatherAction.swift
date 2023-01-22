@@ -1,13 +1,16 @@
+import WindmillDataAccess;
+
+import WeatherCommon;
 import WeatherServer;
 
 internal class DeleteWeatherAction: DeleteWeather {
-    private let _repo: WeatherRepository;
+    private let _repo: Repository<Weather>;
 
-    internal init(with repo: WeatherRepository) {
+    internal init(repo: Repository<Weather>) {
         _repo = repo;
     }
 
-    public func Delete(weatherId: String) async throws {
-        try await _repo.Delete(id: weatherId);
+    public func delete(weatherId: String) async throws {
+        try await _repo.delete(id: weatherId, with: []);
     }
 }

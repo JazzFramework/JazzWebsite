@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "WeatherService",
     platforms: [
-        .macOS(.v12),
+        .macOS(.v13),
     ],
     products: [
         .executable(
@@ -23,15 +23,15 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "Windmill", url: "https://github.com/nathanmentley/swift-framework", .upToNextMinor(from: "0.0.6")),
-        .package(name: "SwiftServerExtensions", url: "https://github.com/nathanmentley/SwiftServerExtensions", .upToNextMinor(from: "0.0.6")),
+        .package(name: "Windmill", url: "../swift-framework", .upToNextMinor(from: "0.0.7")),
+        .package(name: "SwiftServerExtensions", url: "../SwiftServerExtensions", .upToNextMinor(from: "0.0.7")),
     ],
     targets: [
         .target(
             name: "WeatherCommon",
             dependencies: [
-                .product(name: "Codec", package: "Windmill"),
-                .product(name: "Server", package: "Windmill"),
+                .product(name: "WindmillCodec", package: "Windmill"),
+                .product(name: "WindmillServer", package: "Windmill"),
             ],
             path: "Sources/External/Common"
         ),
@@ -52,10 +52,9 @@ let package = Package(
         .target(
             name: "WeatherHttpClient",
             dependencies: [
-                .product(name: "Client", package: "Windmill"),
-                .product(name: "DataAccess", package: "Windmill"),
-                .product(name: "ErrorHandling", package: "Windmill"),
-                .product(name: "Server", package: "Windmill"),
+                .product(name: "WindmillClient", package: "Windmill"),
+                .product(name: "WindmillDataAccess", package: "Windmill"),
+                .product(name: "WindmillServer", package: "Windmill"),
 
                 "WeatherClient"
             ],
@@ -64,101 +63,12 @@ let package = Package(
         .executableTarget(
             name: "WeatherClientTestApp",
             dependencies: [
-                "WeatherHttpClient"
-            ],
-            path: "Sources/Internal/Client.TestApp"
-        ),
-        .target(
-            name: "WeatherServerActionsCreateWeather",
-            dependencies: [
-                .product(name: "Flow", package: "Windmill"),
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.Actions.CreateWeather"
-        ),
-        .target(
-            name: "WeatherServerActionsDeleteWeather",
-            dependencies: [
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.Actions.DeleteWeather"
-        ),
-        .target(
-            name: "WeatherServerActionsGetWeather",
-            dependencies: [
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.Actions.GetWeather"
-        ),
-        .target(
-            name: "WeatherServerActionsGetWeathers",
-            dependencies: [
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.Actions.GetWeathers"
-        ),
-        .target(
-            name: "WeatherServerActionsUpdateWeather",
-            dependencies: [
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.Actions.UpdateWeather"
-        ),
-        .target(
-            name: "WeatherServerHelloWorldBackgroundProcess",
-            dependencies: [
-                .product(name: "ErrorHandling", package: "Windmill"),
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.HelloWorldBackgroundProcess"
-        ),
-        .target(
-            name: "WeatherServerDataAccessInMemory",
-            dependencies: [
-                .product(name: "DataAccess", package: "Windmill"),
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.DataAccess.InMemory"
-        ),
-        .target(
-            name: "WeatherServerErrorsWeatherErrorsWeatherInvalidTempErrorTranslator",
-            dependencies: [
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.Errors.WeatherErrors.WeatherInvalidTempErrorTranslator"
-        ),
-        .target(
-            name: "WeatherServerHostingEndpoints",
-            dependencies: [
-                .product(name: "Server", package: "Windmill"),
-
-                "WeatherServer"
-            ],
-            path: "Sources/Internal/Server.Hosting.Endpoints"
-        ),
-        .executableTarget(
-            name: "WeatherServerHostingApp",
-            dependencies: [
-                .product(name: "ServerNio", package: "Windmill"),
-
-                .product(name: "ServerRequestLogging", package: "SwiftServerExtensions"),
-                .product(name: "ServerAuthentication", package: "SwiftServerExtensions"),
+                .product(name: "WindmillConsole", package: "Windmill"),
+                .product(name: "WindmillEventing", package: "Windmill"),
+                .product(name: "WindmillLab", package: "Windmill"),
+                .product(name: "WindmillLogging", package: "Windmill"),
+                .product(name: "WindmillMessaging", package: "Windmill"),
+                .product(name: "WindmillMetrics", package: "Windmill"),
 
                 "WeatherServer",
                 "WeatherServerDataAccessInMemory",
@@ -167,12 +77,127 @@ let package = Package(
                 "WeatherServerActionsGetWeather",
                 "WeatherServerActionsGetWeathers",
                 "WeatherServerActionsUpdateWeather",
-                "WeatherServerErrorsWeatherErrorsWeatherInvalidTempErrorTranslator",
+                "WeatherServerHelloWorldBackgroundProcess",
+            ],
+            path: "Sources/Internal/Client.TestApp",
+            resources: [
+                .process("Settings")
+            ]
+        ),
+        .target(
+            name: "WeatherServerActionsCreateWeather",
+            dependencies: [
+                .product(name: "WindmillFlow", package: "Windmill"),
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.Actions.CreateWeather"
+        ),
+        .target(
+            name: "WeatherServerActionsDeleteWeather",
+            dependencies: [
+                .product(name: "WindmillEventing", package: "Windmill"),
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.Actions.DeleteWeather"
+        ),
+        .target(
+            name: "WeatherServerActionsGetWeather",
+            dependencies: [
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.Actions.GetWeather"
+        ),
+        .target(
+            name: "WeatherServerActionsGetWeathers",
+            dependencies: [
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.Actions.GetWeathers"
+        ),
+        .target(
+            name: "WeatherServerActionsUpdateWeather",
+            dependencies: [
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.Actions.UpdateWeather"
+        ),
+        .target(
+            name: "WeatherServerHelloWorldBackgroundProcess",
+            dependencies: [
+                .product(name: "WindmillEventing", package: "Windmill"),
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.HelloWorldBackgroundProcess"
+        ),
+        .target(
+            name: "WeatherServerDataAccessInMemory",
+            dependencies: [
+                .product(name: "WindmillDataAccess", package: "Windmill"),
+                .product(name: "WindmillDataAccessInMemory", package: "Windmill"),
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.DataAccess.InMemory"
+        ),
+        .target(
+            name: "WeatherServerErrorsWeatherInvalidTempErrorTranslator",
+            dependencies: [
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.Errors.WeatherInvalidTempErrorTranslator"
+        ),
+        .target(
+            name: "WeatherServerHostingEndpoints",
+            dependencies: [
+                .product(name: "WindmillLogging", package: "Windmill"),
+                .product(name: "WindmillServer", package: "Windmill"),
+
+                "WeatherServer"
+            ],
+            path: "Sources/Internal/Server.Hosting.Endpoints"
+        ),
+        .executableTarget(
+            name: "WeatherServerHostingApp",
+            dependencies: [
+                .product(name: "WindmillEventing", package: "Windmill"),
+                .product(name: "WindmillLab", package: "Windmill"),
+                .product(name: "WindmillLogging", package: "Windmill"),
+                .product(name: "WindmillMessaging", package: "Windmill"),
+                .product(name: "WindmillMetrics", package: "Windmill"),
+                .product(name: "WindmillServerHummingbird", package: "Windmill"),
+
+                .product(name: "WindmillServerRequestLogging", package: "SwiftServerExtensions"),
+                .product(name: "WindmillServerAuthentication", package: "SwiftServerExtensions"),
+
+                "WeatherServer",
+                "WeatherServerDataAccessInMemory",
+                "WeatherServerActionsCreateWeather",
+                "WeatherServerActionsDeleteWeather",
+                "WeatherServerActionsGetWeather",
+                "WeatherServerActionsGetWeathers",
+                "WeatherServerActionsUpdateWeather",
+                "WeatherServerErrorsWeatherInvalidTempErrorTranslator",
                 "WeatherServerHelloWorldBackgroundProcess",
                 "WeatherServerHostingEndpoints"
             ],
             path: "Sources/Internal/Server.Hosting.App",
             resources: [
+                .process("Assets"),
                 .process("Settings")
             ]
         ),

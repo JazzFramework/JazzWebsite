@@ -1,11 +1,11 @@
 import WindmillConfiguration;
-import WindmillCore;
 import WindmillDataAccess;
-import WindmillDataAccessInMemory;
+import WindmillDataAccessSqlite;
+import WindmillServer;
 
 import WeatherCommon;
 
-public final class InMemoryWeatherRepositoryInitializer: Initializer {
+public final class SqliteWeatherRepositoryInitializer: Initializer {
     public required init() {}
 
     public final override func initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
@@ -23,7 +23,7 @@ public final class InMemoryWeatherRepositoryInitializer: Initializer {
                     as HintProcessor<Weather>;
             })
             .wireUp(singleton: { sp in
-                return InMemoryRepository<Weather>(
+                return SqliteRepository<Weather>(
                     criterionProcessor: try await sp.fetchType(),
                     hintProcessor: try await sp.fetchType()
                 )

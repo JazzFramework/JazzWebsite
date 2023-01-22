@@ -1,28 +1,24 @@
-import Client;
-import Configuration;
-import Server;
+import WindmillClient;
+import WindmillConfiguration;
+import WindmillCore;
 
 import WeatherClient;
 
 public final class WeatherClientInitializer: Initializer {
     public required init() {}
 
-    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = configurationBuilder
-            .With(decoder: WeatherHttpClientConfigV1JsonCodec())
-            .With(
+            .with(decoder: WeatherHttpClientConfigV1JsonCodec())
+            .with(
                 file: "weatherClientHttpSettings.json",
-                for: WeatherHttpClientConfigV1JsonCodec.SupportedMediaType
+                for: WeatherHttpClientConfigV1JsonCodec.supportedMediaType
             );
 
         _ = try app
-            .WireUp(singleton: { sp in
+            .wireUp(singleton: { sp in
                 return WeatherHttpClient(
-                    with: try await sp.FetchType(),
-                    with: [
-                        WeatherHttpClientErrorMapper(),
-                        ClientErrorMapper()
-                    ]
+                    with: try await sp.fetchType()
                 ) as WeatherClient;
             });
     }

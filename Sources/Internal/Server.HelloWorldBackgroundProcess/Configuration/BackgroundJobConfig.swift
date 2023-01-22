@@ -1,8 +1,8 @@
 internal class BackgroundJobConfig {
-    internal let Setting: String;
+    internal let setting: String;
 
     internal init(_ setting: String)
     {
-        Setting = setting;
+        self.setting = setting;
     };
 }

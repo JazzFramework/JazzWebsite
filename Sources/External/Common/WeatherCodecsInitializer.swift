@@ -1,17 +1,18 @@
-import Configuration;
-import Server;
+import WindmillCodec;
+import WindmillConfiguration;
+import WindmillServer;
 
-public final class WeatherCodecsInitializer: Initializer {
+public final class WeatherCodecsInitializer: ServerInitializer {
     public required init() {}
 
-    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func initialize(for app: ServerApp, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
-            .WireUp(transcoder: { _ in
+            .wireUp(transcoder: { _ in
                 return WeatherV1JsonCodec();
             })
 
-            .WireUp(transcoder: { _ in
-                return WeatherCollectionV1JsonCodec();
+            .wireUp(transcoder: { _ in
+                return WeatherV1JsonCodec.collectionCodec;
             });
     }
 }

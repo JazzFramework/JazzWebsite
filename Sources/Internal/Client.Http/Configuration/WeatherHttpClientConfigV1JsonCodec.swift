@@ -1,9 +1,9 @@
-import Codec;
+import WindmillCodec;
 
 internal class WeatherHttpClientConfigV1JsonCodec: JsonCodec<WeatherHttpClientConfig> {
-    private static let DefaultPort: Int = 80;
+    private static let defaultPort: Int = 80;
 
-    internal static let SupportedMediaType: MediaType =
+    internal static let supportedMediaType: MediaType =
         MediaType(
             withType: "application",
             withSubtype: "json",
@@ -13,24 +13,24 @@ internal class WeatherHttpClientConfigV1JsonCodec: JsonCodec<WeatherHttpClientCo
             ]
         );
 
-    public override func GetSupportedMediaType() -> MediaType {
-        return WeatherHttpClientConfigV1JsonCodec.SupportedMediaType;
+    public override func getSupportedMediaType() -> MediaType {
+        return WeatherHttpClientConfigV1JsonCodec.supportedMediaType;
     }
 
-    public override func EncodeJson(data: WeatherHttpClientConfig, for mediatype: MediaType) async -> JsonObject {
+    public override func encodeJson(data: WeatherHttpClientConfig, for mediatype: MediaType) async -> JsonObject {
         return JsonObjectBuilder()
-            .With("hostname", property: JsonProperty(withData: data.Hostname))
-            .With("port", property: JsonProperty(withData: data.Port))
-            .Build();
+            .with("hostname", property: JsonProperty(withData: data.Hostname))
+            .with("port", property: JsonProperty(withData: data.Port))
+            .build();
     }
 
-    public override func DecodeJson(
+    public override func decodeJson(
         data: JsonObject,
         for mediatype: MediaType
     ) async -> WeatherHttpClientConfig? {
         let hostname: JsonProperty = data["hostname"] as! JsonProperty;
         let port: JsonProperty = data["port"] as! JsonProperty;
 
-        return WeatherHttpClientConfig(hostname.GetString(), port.GetInteger() ?? WeatherHttpClientConfigV1JsonCodec.DefaultPort);
+        return WeatherHttpClientConfig(hostname.getString(), port.getInteger() ?? WeatherHttpClientConfigV1JsonCodec.defaultPort);
     }
 }

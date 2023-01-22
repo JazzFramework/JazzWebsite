@@ -1,17 +1,20 @@
-import Configuration;
-import Server;
+import WindmillConfiguration;
+import WindmillCore;
+import WindmillDataAccess;
+import WindmillEventing;
 
+import WeatherCommon;
 import WeatherServer;
 
 public final class CreateWeatherActionInitializer: Initializer {
     public required init() {}
 
-    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
-            .WireUp(singleton: { sp in
-                return try CreateWeatherActionBuilder()
-                    .With(repository: try await sp.FetchType())
-                    .Build() as CreateWeather;
-            });
+            .wireUp(singleton: { sp in return try self.buildAction(repo: try await sp.fetchType(), eventPublisher: try await sp.fetchType()); });
+    }
+
+    private func buildAction(repo: Repository<Weather>, eventPublisher: EventPublisher) throws -> CreateWeather {
+        return try CreateWeatherActionBuilder().with(repo: repo).with(eventPublisher: eventPublisher).build();
     }
 }

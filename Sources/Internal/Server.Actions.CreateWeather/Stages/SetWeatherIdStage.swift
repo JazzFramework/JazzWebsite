@@ -1,7 +1,7 @@
 import Foundation;
 
-import Context;
-import Flow;
+import WindmillContext;
+import WindmillFlow;
 
 internal final class SetWeatherIdStage: BaseStage {
     internal static let NAME: String = "\(SetWeatherIdStage.self)"
@@ -23,12 +23,12 @@ internal final class SetWeatherIdStage: BaseStage {
         super.init(withTransactions: transactions);
     }
 
-    public override func Execute(for context: FlowContext) async throws -> StageResult {
-        guard let weatherContext: WeatherContext = _contextResolver.Resolve(for: context) else {
+    public override func execute(for context: FlowContext) async throws -> StageResult {
+        guard let weatherContext: WeatherContext = _contextResolver.resolve(for: context) else {
             return SetWeatherIdStage.MISSING_CONTEXT_RESULT;
         }
 
-        weatherContext.Value.Set(id: UUID().uuidString);
+        weatherContext.value.set(id: UUID().uuidString);
 
         return SetWeatherIdStage.SUCCESS_RESULT;
     }

@@ -1,8 +1,8 @@
 import Foundation;
 
-import Client;
-import Configuration;
-import ErrorHandling;
+import WindmillClient;
+import WindmillCodec;
+import WindmillConfiguration;
 
 import WeatherCommon;
 import WeatherClient;
@@ -14,11 +14,8 @@ internal class WeatherHttpClient: WeatherClient {
     private let _host: String;
     private let _port: Int;
 
-    private let _errorMappers: [ErrorMapper];
-
     internal init(
-        with config: Configuration,
-        with errorMappers: [ErrorMapper]
+        with config: Configuration
     ) {
         /*if let clientConfig: WeatherHttpClientConfig = config.Fetch() {
             _host = clientConfig.Hostname;
@@ -27,135 +24,136 @@ internal class WeatherHttpClient: WeatherClient {
             _host = WeatherHttpClient.DefaultHostname;
             _port = WeatherHttpClient.DefaultPort;
         //}
-
-        _errorMappers = errorMappers;
     }
 
-    public func Create(weather: Weather) throws -> Weather {
+    public func create(weather: Weather) throws -> Weather {
         do {
             let url: URL = try UrlBuilder()
-                .With(host: _host)
-                .With(port: _port)
-                .With(path: "v1")
-                .With(path: "weathers")
-                .Build();
+                .with(host: _host)
+                .with(port: _port)
+                .with(path: "v1")
+                .with(path: "weathers")
+                .build();
 
             let response: ProcessableResponse = try RequestRunner()
-                .For(url: url)
-                .For(body: weather)
-                .For(method: .post)
-                .For(acceptType: WeatherV1JsonCodec.SupportedMediaType)
-                .Run();
+                .with(url: url)
+                .with(body: weather)
+                .with(method: .post)
+                .with(acceptType: WeatherV1JsonCodec.weatherMediaType)
+                .run();
 
             return try ResponseProcessor()
-                .Ensure(statusCode: 200)
-                .Process(response: response);
+                .ensure(statusCode: 200)
+                .process(response: response);
         } catch {
-            throw Map(error: error);
+            throw map(error: error);
         }
     }
 
-    public func Update(weather: Weather) throws -> Weather {
+    public func update(weather: Weather) throws -> Weather {
         do {
             let url: URL = try UrlBuilder()
-                .With(host: _host)
-                .With(port: _port)
-                .With(path: "v1")
-                .With(path: "weathers")
-                .Build();
+                .with(host: _host)
+                .with(port: _port)
+                .with(path: "v1")
+                .with(path: "weathers")
+                .build();
 
             let response: ProcessableResponse = try RequestRunner()
-                .For(url: url)
-                .For(body: weather)
-                .For(method: .put)
-                .For(acceptType: WeatherV1JsonCodec.SupportedMediaType)
-                .Run();
+                .with(url: url)
+                .with(body: weather)
+                .with(method: .put)
+                .with(acceptType: WeatherV1JsonCodec.weatherMediaType)
+                .run();
 
             return try ResponseProcessor()
-                .Ensure(statusCode: 200)
-                .Process(response: response);
+                .ensure(statusCode: 200)
+                .process(response: response);
         } catch {
-            throw Map(error: error);
+            throw map(error: error);
         }
     }
 
-    public func GetWeather(id: String) throws -> Weather {
+    public func getWeather(id: String) throws -> Weather {
         do {
             let url: URL = try UrlBuilder()
-                .With(host: _host)
-                .With(port: _port)
-                .With(path: "v1")
-                .With(path: "weathers")
-                .With(path: id)
-                .Build();
+                .with(host: _host)
+                .with(port: _port)
+                .with(path: "v1")
+                .with(path: "weathers")
+                .with(path: id)
+                .build();
 
             let response: ProcessableResponse = try RequestRunner()
-                .For(url: url)
-                .For(method: .get)
-                .For(acceptType: WeatherV1JsonCodec.SupportedMediaType)
-                .Run();
+                .with(url: url)
+                .with(method: .get)
+                .with(acceptType: WeatherV1JsonCodec.weatherMediaType)
+                .run();
 
             return try ResponseProcessor()
-                .Ensure(statusCode: 200)
-                .Process(response: response);
+                .ensure(statusCode: 200)
+                .process(response: response);
         } catch {
-            throw Map(error: error);
+            throw map(error: error);
         }
     }
 
-    public func GetWeathers() throws -> [Weather] {
+    public func getWeathers() throws -> [Weather] {
         do {
             let url: URL = try UrlBuilder()
-                .With(host: _host)
-                .With(port: _port)
-                .With(path: "v1")
-                .With(path: "weathers")
-                .Build();
+                .with(host: _host)
+                .with(port: _port)
+                .with(path: "v1")
+                .with(path: "weathers")
+                .build();
 
             let response: ProcessableResponse = try RequestRunner()
-                .For(url: url)
-                .For(method: .get)
-                .For(acceptType: WeatherCollectionV1JsonCodec.SupportedMediaType)
-                .Run();
+                .with(url: url)
+                .with(method: .get)
+                .with(acceptType: 
+                    MediaType(
+                        withType: "application",
+                        withSubtype: "json",
+                        withParameters: [
+                            "structure": "weather.weathers",
+                            "version": "1"
+                        ]
+                    )
+                )
+                .run();
 
             return try ResponseProcessor()
-                .Ensure(statusCode: 200)
-                .Process(response: response);
+                .ensure(statusCode: 200)
+                .process(response: response);
         } catch {
-            throw Map(error: error);
+            throw map(error: error);
         }
     }
 
-    public func DeleteWeather(id: String) throws {
+    public func deleteWeather(id: String) throws {
         do {
             let url: URL = try UrlBuilder()
-                .With(host: _host)
-                .With(port: _port)
-                .With(path: "v1")
-                .With(path: "weathers")
-                .With(path: id)
-                .Build();
+                .with(host: _host)
+                .with(port: _port)
+                .with(path: "v1")
+                .with(path: "weathers")
+                .with(path: id)
+                .build();
 
             let response: ProcessableResponse = try RequestRunner()
-                .For(url: url)
-                .For(method: .delete)
-                .Run();
+                .with(url: url)
+                .with(method: .delete)
+                .run();
 
             return try ResponseProcessor()
-                .Ensure(statusCode: 204)
-                .Process(response: response);
+                .ensure(statusCode: 204)
+                .process(response: response);
         } catch {
-            throw Map(error: error);
+            throw map(error: error);
         }
     }
 
-    private func Map(error: Error) -> Error {
-        for errorMapper in _errorMappers {
-            if errorMapper.CanMap(error: error) {
-                return errorMapper.Map(error: error);
-            }
-        }
-
+    private func map(error: Error) -> Error {
         return error;
     }
 }

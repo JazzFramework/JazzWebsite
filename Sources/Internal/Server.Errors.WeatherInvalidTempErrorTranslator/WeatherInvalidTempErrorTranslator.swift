@@ -1,9 +1,9 @@
-import Server;
+import WindmillServer;
 
 import WeatherServer;
 
 internal class WeatherInvalidTempErrorTranslator: ErrorTranslator {
-    public override func CanHandle(error: Error) -> Bool {
+    public override func canHandle(error: Error) -> Bool {
         if case WeatherErrors.invalidTemp = error {
             return true;
         }
@@ -11,7 +11,7 @@ internal class WeatherInvalidTempErrorTranslator: ErrorTranslator {
         return false;
     }
 
-    public override func Translate(error: Error) -> ApiError {
+    public override func translate(error: Error) -> ApiError {
         switch(error) {
             case WeatherErrors.invalidTemp(let reason):
                 return ApiError(
@@ -24,7 +24,7 @@ internal class WeatherInvalidTempErrorTranslator: ErrorTranslator {
                 );
 
             default:
-                return BuildUnknownError();
+                return buildUnknownError();
         }
     }
 }

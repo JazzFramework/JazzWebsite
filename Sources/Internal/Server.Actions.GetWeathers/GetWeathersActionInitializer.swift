@@ -1,17 +1,13 @@
-import Configuration;
-import Server;
+import WindmillConfiguration;
+import WindmillCore;
 
 import WeatherServer;
 
 public final class GetWeathersActionInitializer: Initializer {
     public required init() {}
 
-    public final override func Initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
+    public final override func initialize(for app: App, with configurationBuilder: ConfigurationBuilder) throws {
         _ = try app
-            .WireUp(singleton: { sp in
-                return GetWeathersAction(
-                    with: try await sp.FetchType()
-                ) as GetWeathers;
-            });
+            .wireUp(singleton: { sp in return GetWeathersAction(repo: try await sp.fetchType()) as GetWeathers; });
     }
 }

@@ -1,27 +1,21 @@
-import Server;
+import WindmillServer;
 
 import WeatherServer;
 
-internal class DeleteWeatherController: Controller {
+internal final class DeleteWeatherController: ApiController {
     private let _action: DeleteWeather;
 
-    internal init(with action: DeleteWeather) {
+    internal init(action: DeleteWeather) {
         _action = action;
     }
 
-    public override func GetMethod() -> HttpMethod {
-        return .delete;
-    }
+    public override func getMethod() -> HttpMethod { return .delete; }
+    public override func getRoute() -> String { return "/v1/weather/:id"; }
+    public override func logic(withRequest request: RequestContext) async throws -> ResultContext {
+        let weatherId: String = request.getRouteParameter(key: "id");
 
-    public override func GetRoute() -> String {
-        return "/weather/:id";
-    }
+        try await _action.delete(weatherId: weatherId);
 
-    public override func Logic(withRequest request: RequestContext) async throws -> ResultContext {
-        let weatherId: String = request.GetRouteParameter(key: "id");
-
-        try await _action.Delete(weatherId: weatherId);
-
-        return NoContent();
+        return noContent();
     }
 }

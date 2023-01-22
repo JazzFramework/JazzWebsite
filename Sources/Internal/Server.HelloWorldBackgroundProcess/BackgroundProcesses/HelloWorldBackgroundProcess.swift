@@ -1,35 +1,37 @@
 import Foundation;
 
-import Configuration;
-import Server;
+import WindmillConfiguration;
+import WindmillCore;
+import WindmillEventing;
 
 import WeatherCommon;
 import WeatherServer;
 
 internal final class HelloWorldBackgroundProcess: BackgroundProcess {
     private let _config: Configuration;
+    private let _eventSubscriber: EventSubscriber;
     private let _fetchAction: GetWeathers;
     private let _deleteAction: DeleteWeather;
 
     internal init(
-        with config: Configuration,
-        with fetchAction: GetWeathers,
-        with deleteAction: DeleteWeather
+        config: Configuration,
+        eventSubscriber: EventSubscriber,
+        fetchAction: GetWeathers,
+        deleteAction: DeleteWeather
     ) {
         _config = config;
+        _eventSubscriber = eventSubscriber;
         _fetchAction = fetchAction;
         _deleteAction = deleteAction;
     }
 
-    public override func Logic() async {
-        while true {
-            sleep(1);
-
+    public override func logic() async {
+        _ = await _eventSubscriber.subscribe(on: "WEATHER_CREATED") { (_: Event<Weather>) in
             do {
-                let weathers: [Weather] = try await _fetchAction.Get();
+                let weathers: [Weather] = try await self._fetchAction.get();
 
-                if let config: BackgroundJobConfig = await _config.Fetch() {
-                    print(config.Setting);
+                if let config: BackgroundJobConfig = await self._config.fetch() {
+                    print(config.setting);
                 }
 
                 print("Hello, The service currently knows of \(weathers.count) weather(s).");
@@ -38,7 +40,7 @@ internal final class HelloWorldBackgroundProcess: BackgroundProcess {
                     print("The service knows too much about the weather, and will delete all of it's knowledge.");
 
                     for weather in weathers {
-                        try await _deleteAction.Delete(weatherId: weather.Id);
+                        try await self._deleteAction.delete(weatherId: weather.id);
                     }
                 }
             }

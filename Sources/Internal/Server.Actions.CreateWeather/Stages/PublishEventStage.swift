@@ -1,37 +1,42 @@
 import WindmillContext;
+import WindmillEventing;
 import WindmillFlow;
 
+import WeatherCommon;
 import WeatherServer;
 
-internal final class ValidateWeatherStage: BaseStage {
-    internal static let NAME: String = "\(ValidateWeatherStage.self)"
+internal final class PublishEventStage: BaseStage {
+    internal static let NAME: String = "\(PublishEventStage.self)"
 
     internal static let SUCCESS_RESULT: StageResult =
-        StageResult(as: "\(ValidateWeatherStage.NAME) success");
+        StageResult(as: "\(PublishEventStage.NAME) success");
 
     internal static let MISSING_CONTEXT_RESULT: StageResult =
-        StageResult(as: "\(ValidateWeatherStage.NAME) missing context");
+        StageResult(as: "\(PublishEventStage.NAME) missing context");
 
     private let _contextResolver: ContextResolver<FlowContext, WeatherContext>;
+    private let _eventPublisher: EventPublisher;
 
     internal init(
         withContextResolver contextResolver: ContextResolver<FlowContext, WeatherContext>,
+        withEventPublisher eventPublisher: EventPublisher,
         withTransactions transactions: [StageResult:String]
     ) {
         _contextResolver = contextResolver;
+        _eventPublisher = eventPublisher;
 
         super.init(withTransactions: transactions);
     }
 
     public override func execute(for context: FlowContext) async throws -> StageResult {
         guard let weatherContext: WeatherContext = _contextResolver.resolve(for: context) else {
-            return ValidateWeatherStage.MISSING_CONTEXT_RESULT;
+            return PublishEventStage.MISSING_CONTEXT_RESULT;
         }
 
-        if weatherContext.value.temp == "" {
-            throw WeatherErrors.invalidTemp(reason: "missing temp");
-        }
+        let event: Event<Weather> = Event<Weather>(type: "WEATHER_CREATED", value: weatherContext.value);
 
-        return ValidateWeatherStage.SUCCESS_RESULT;
+        await _eventPublisher.publish(event: event, on: "WEATHER_CREATED");
+
+        return PublishEventStage.SUCCESS_RESULT;
     }
 }

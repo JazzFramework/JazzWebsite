@@ -1,5 +1,5 @@
 import WeatherCommon;
 
 public protocol DeleteWeather {
-    func Delete(weatherId: String) async throws;
+    func delete(weatherId: String) async throws;
 };

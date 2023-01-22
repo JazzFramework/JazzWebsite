@@ -1,5 +1,5 @@
 import WeatherCommon;
 
 public protocol CreateWeather {
-    func Create(weather: Weather) async throws -> Weather;
+    func create(weather: Weather) async throws -> Weather;
 };

@@ -1,16 +1,16 @@
-import DataAccess;
+import WindmillDataAccess;
 
 import WeatherCommon;
 import WeatherServer;
 
 internal class GetWeathersAction: GetWeathers {
-    private let _repo: WeatherRepository;
+    private let _repo: Repository<Weather>;
 
-    internal init(with repo: WeatherRepository) {
+    internal init(repo: Repository<Weather>) {
         _repo = repo;
     }
 
-    public func Get() async throws -> [Weather] {
-        return try await _repo.Get(for: []);
+    public func get() async throws -> [Weather] {
+        return try await _repo.get(for: [], with: []);
     }
 }
