@@ -23,7 +23,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/JazzFramework/Jazz.git",
       "state" : {
-        "revision" : "15810e420c08d389c9015f111547cae0a2e8876a",
+        "revision" : "dde7987b80dcb835451768ddd300d9c8e0af88fe",
         "version" : "0.0.8"
       }
     },
@@ -32,7 +32,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/JazzFramework/JazzServerNio.git",
       "state" : {
-        "revision" : "a7514f1dba741dda1f581d5e252575919d42b3dc",
+        "revision" : "37484872b7396fcc3db0d837eacd91618a380b37",
         "version" : "0.0.8"
       }
     },
@@ -41,7 +41,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/JazzFramework/JazzTemplatingEngineStencil.git",
       "state" : {
-        "revision" : "3afad81b0f08bef0bc6ebab69e54c885e9fb91f3",
+        "revision" : "408e30b35439e1a79e47b4449e8a35cdf1fa31e1",
         "version" : "0.0.8"
       }
     },
@@ -131,8 +131,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-extras.git",
       "state" : {
-        "revision" : "98378d1fe56527761c180f70b2d66a7b2307fc39",
-        "version" : "1.16.0"
+        "revision" : "d75ed708d00353acf173ca23018b6bd46f949464",
+        "version" : "1.17.0"
       }
     },
     {
@@ -140,8 +140,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-http2.git",
       "state" : {
-        "revision" : "8dcda6828844022028025241e4e7d52cbbe250de",
-        "version" : "1.25.0"
+        "revision" : "38feec96bcd929028939107684073554bf01abeb",
+        "version" : "1.25.2"
       }
     },
     {
