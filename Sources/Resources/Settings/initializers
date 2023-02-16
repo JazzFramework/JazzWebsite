@@ -1,0 +1,13 @@
+# SwiftJazz Website Initializers
+
+# Base framework initializers
+JazzServer.DefaultCodecsInitializer
+JazzServer.DefaultErrorTranslatorsInitializer
+JazzServer.DefaultServerInitializer
+
+# Setup framework implmentation initializers
+JazzTemplatingEngineStencil.StencilTemplatingEngineInitializer      # Use stencil for the templating engine
+JazzServerHummingbird.HummingbirdHttpProcessorInitializer           # Use hummingbird for the http processing
+
+# Run the app specific initializer
+ServerApp.AppInitializer

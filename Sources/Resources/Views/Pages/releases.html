@@ -1,0 +1,9 @@
+{% extends "Views/base.html" %}
+
+{% block title %}SwiftJazz - Releases{% endblock %}
+
+{% block content %}
+  {% for note in notes %}
+    <h2>{{ note }}</h2>
+  {% endfor %}
+{% endblock %}
